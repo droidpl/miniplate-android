@@ -1,0 +1,41 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'grill'
+
+android {
+    compileSdkVersion rootProject.ext.targetSdk
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode grill.CI.getCommitRevision()
+        versionName grill.CI.getTag()
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        consumerProguardFiles 'proguard.cfg'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "androidx.lifecycle:lifecycle-runtime:$architectureComponents"
+    implementation "androidx.lifecycle:lifecycle-extensions:$architectureComponents"
+    implementation "androidx.room:room-runtime:$architectureComponents"
+    kapt "androidx.room:room-compiler:$architectureComponents"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+}
+
+repositories {
+    mavenCentral()
+}

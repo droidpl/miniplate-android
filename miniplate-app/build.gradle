@@ -1,0 +1,68 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'grill'
+
+android {
+    compileSdkVersion rootProject.ext.targetSdk
+    buildToolsVersion rootProject.ext.buildTools
+    defaultConfig {
+        applicationId "com.sample.miniplate"
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode grill.CI.getCommitRevision()
+        versionName grill.CI.getTag()
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    flavorDimensions "environment"
+    productFlavors {
+        dev {
+            buildConfigField "String", "API_ENDPOINT", "\"https://sample-dev.sample.com/api1/\""
+            dimension "environment"
+        }
+
+        prod {
+            buildConfigField "String", "API_ENDPOINT", "\"https://sample.sample.com/api1/\""
+            dimension "environment"
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
+        }
+    }
+}
+
+dependencies {
+    implementation project(':miniplate-sdk')
+
+    //Support
+    implementation "androidx.appcompat:appcompat:$support"
+    implementation "com.google.android.material:material:$supportDesign"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
+
+    //Project deps
+    implementation "com.evernote:android-state:$stateSaver"
+    kapt "com.evernote:android-state-processor:$stateSaver"
+
+    //Development deps
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanaryLibrary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanaryLibrary"
+    debugImplementation "com.facebook.stetho:stetho:$stethoLibrary"
+    debugImplementation "com.facebook.stetho:stetho-okhttp3:$stethoLibrary"
+
+    //Testing
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso"
+    testImplementation "junit:junit:$jUnit"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
