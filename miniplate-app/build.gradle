@@ -15,6 +15,22 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    //Uncomment with your config
+//    signingConfigs {
+//        debug {
+//            storeFile file("../keystores/your-debug-keystore.keystore")
+//            storePassword "your_password"
+//            keyAlias "your_alias"
+//            keyPassword "your_password"
+//        }
+//        release {
+//            storeFile file("../keystores/your-release-keystore.keystore")
+//            storePassword "your_password"
+//            keyAlias "your_alias"
+//            keyPassword "your_password"
+//        }
+//    }
+
     flavorDimensions "environment"
     productFlavors {
         dev {
@@ -33,11 +49,15 @@ android {
             debuggable true
             minifyEnabled false
             shrinkResources false
+            //Uncomment with your config
+//            signingConfig signingConfigs.debug
         }
         release {
             debuggable false
             minifyEnabled true
             shrinkResources true
+            //Uncomment with your config
+//            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard.cfg'
         }
     }
@@ -50,10 +70,6 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$support"
     implementation "com.google.android.material:material:$supportDesign"
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayout"
-
-    //Project deps
-    implementation "com.evernote:android-state:$stateSaver"
-    kapt "com.evernote:android-state-processor:$stateSaver"
 
     //Development deps
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanaryLibrary"

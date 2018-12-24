@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.61'
+    ext.kotlin_version = '1.3.11'
     ext.grill = '1.1.5'
     repositories {
         jcenter()
@@ -33,19 +33,20 @@ ext {
     buildTools = "28.0.3"
 
     //Deps
-    support = "1.0.0"
+    support = "1.0.2"
     supportDesign = "1.0.0"
     constraintLayout = "1.1.3"
     architectureComponents = "2.0.0"
     retrofit = "2.0.2"
     dagger = "2.0.2"
-    stateSaver = "1.1.4"
+    androidKtx = "1.0.1"
+    kotlinCorroutines = "1.1.0"
 
     //Development deps
-    leakcanaryLibrary = "1.5.4"
+    leakcanaryLibrary = "1.6.2"
     stethoLibrary = "1.5.0"
 
     //Testing
     jUnit = "4.12"
-    espresso = "3.1.0-alpha3"
+    espresso = "3.1.0"
 }
